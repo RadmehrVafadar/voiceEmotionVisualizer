@@ -40,9 +40,12 @@ export default function HomePage() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
     controls.minDistance = 50;
-    controls.maxDistance = 800;
-    controls.enablePan = false; // Disable panning to make interaction clearer
+    controls.maxDistance = 500;
+    controls.enablePan = false; // Disable panning so rotation stays around the object
+    controls.target.set(0, 0, 0); // Ensure the controls pivot is at the scene origin (particle swarm center)
     controls.rotateSpeed = 0.5; // Slow down rotation speed
+    controls.autoRotate = true; // Enable automatic camera rotation around target
+    controls.autoRotateSpeed = 0.5; // Control auto-rotation speed (adjust as needed)
 
     // Lighting
     scene.add(new THREE.HemisphereLight(0x808080, 0x101010, 1));
@@ -51,7 +54,7 @@ export default function HomePage() {
     scene.add(dirLight);
 
     // Particle swarm setup
-    const PARTICLES = 5000;
+    const PARTICLES = 9000;
     const baseRadius = 50;
     const directions = new Float32Array(PARTICLES * 3);
     const positions = new Float32Array(PARTICLES * 3);
@@ -87,7 +90,7 @@ export default function HomePage() {
 
     // Animation settings
     const maxAmpDisp = 100;   // global amplitude displacement
-    const noiseAmp = 5;     // noise amplitude near sphere
+    const noiseAmp = 10;     // noise amplitude near sphere
     let frameId: number;
 
     // Mouse interaction setup
@@ -197,7 +200,7 @@ export default function HomePage() {
           // Mouse interaction using the 3D position
           const particlePos = new THREE.Vector3(px, py, pz);
           const distanceToMouse = particlePos.distanceTo(mouseWorldPos);
-          const interactionRadius = 150;
+          const interactionRadius = 100;
           
           if (distanceToMouse < interactionRadius) {
             const strength = 1 - distanceToMouse / interactionRadius; // 0 at edge, 1 at center
@@ -230,7 +233,8 @@ export default function HomePage() {
       }
 
       // spin the whole swarm
-      points.rotation.y += 0.002;
+      // Originally the rotation was 0.001 but I turned off so it does mess with the cursor
+      points.rotation.y += 0.000;
 
       renderer.render(scene, camera);
       frameId = requestAnimationFrame(animate);
