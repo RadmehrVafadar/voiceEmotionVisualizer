@@ -1,4 +1,14 @@
 
+Hello!
+This projects main goal was to explore a unique way of generative art using music.
+Hope you enjoy!
+
+INSTRUCTIONS: 
+1. Drag and Drop your mp4 or MIDI file to the top bar
+
+
+NOTE: You will have to provide your own audio file.
+
 ![Demo 8](./demo8.gif)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
